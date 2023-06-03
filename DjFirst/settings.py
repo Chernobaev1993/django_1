@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,23 +22,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-$9sg*wzwm@%t$ycgb(bik!-2e((f)xy4eh16&l2ulhis#e=6xv'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# ВНИМАТЕЛЬНО! Переменная для отладки
 DEBUG = True
 
+# Разрешенные хосты
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
+# Установленные плагины/приложения
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',           # Отвечает за группу Authentic and Authoriz
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',          # Связывает страницы с сайтом
+    'django.contrib.flatpages',      # Добавляет плоские страницы
 ]
 
+# Указывает с каким количеством сайтов связать приложение
+SITE_ID = 1
+
+# Оболочки
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -47,14 +52,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',  # Оболочки для плоских страничек
 ]
 
 ROOT_URLCONF = 'DjFirst.urls'
 
+# Шаблоны
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,10 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjFirst.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# Настройки БД
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

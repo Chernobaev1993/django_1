@@ -15,8 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
+
+# Список главных url приложения
 urlpatterns = [
+    # по адресу admin/ мы будем открывать приложение admin
     path('admin/', admin.site.urls),
+
+    # по адресу pages/ мы будем подгружать все (include) адреса в списке urlpatterns из flatpages.urls
+    path('pages/', include('django.contrib.flatpages.urls'))
 ]
