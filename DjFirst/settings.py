@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',          # Связывает страницы с сайтом
     'django.contrib.flatpages',      # Добавляет плоские страницы
+    'fpages',                        # Добавляет новые поля при создании плоской страницы
 ]
 
 # Указывает с каким количеством сайтов связать приложение
@@ -125,3 +126,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Переменная для поиска статических файлов
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
