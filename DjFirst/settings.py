@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$9sg*wzwm@%t$ycgb(bik!-2e((f)xy4eh16&l2ulhis#e=6xv
 DEBUG = True
 
 # Разрешенные хосты
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Установленные плагины/приложения
 INSTALLED_APPS = [
@@ -39,6 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.sites',          # Связывает страницы с сайтом
     'django.contrib.flatpages',      # Добавляет плоские страницы
     'fpages',                        # Добавляет новые поля при создании плоской страницы
+    'mc_donalds',                    # Добавляем наше приложение mc_donalds
+    'sign',                          # Для авторизации
+    'protect',                       # Для защиты
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.google',
+]
+
+# Для приложения allauth
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 # Указывает с каким количеством сайтов связать приложение
@@ -62,7 +79,7 @@ ROOT_URLCONF = 'DjFirst.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Папка поиска шаблонов BASE_DIR/templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +87,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',  # Для приложения allauth
             ],
         },
     },
@@ -131,3 +149,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+# Адрес авторизации
+# LOGIN_URL = 'sign/login'
+LOGIN_URL = '/accounts/login/'
+
+# Адрес перенаправления после авторизации
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}

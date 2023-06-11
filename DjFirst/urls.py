@@ -24,5 +24,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # по адресу pages/ мы будем подгружать все (include) адреса в списке urlpatterns из flatpages.urls
-    path('pages/', include('django.contrib.flatpages.urls'))
+    path('pages/', include('django.contrib.flatpages.urls')),
+
+    # Перенаправляем корневую страницу в приложение protect
+    path('', include('protect.urls')),
+
+    # Перенаправляем все страницы, которые начинаются с sign в приложение sign
+    path('sign/', include('sign.urls')),
+
+    # Для allauth
+    path('accounts/', include('allauth.urls')),
 ]
