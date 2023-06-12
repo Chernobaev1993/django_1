@@ -23,6 +23,9 @@ urlpatterns = [
     # по адресу admin/ мы будем открывать приложение admin
     path('admin/', admin.site.urls),
 
+    # по адресу products/ мы будем открывать адреса из приложения simpleapp
+    path('products/', include('simpleapp.urls')),
+
     # по адресу pages/ мы будем подгружать все (include) адреса в списке urlpatterns из flatpages.urls
     path('pages/', include('django.contrib.flatpages.urls')),
 

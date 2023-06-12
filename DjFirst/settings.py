@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',      # Добавляет плоские страницы
     'fpages',                        # Добавляет новые поля при создании плоской страницы
     'mc_donalds',                    # Добавляем наше приложение mc_donalds
+    'simpleapp',                     # Обучение представлениям
     'sign',                          # Для авторизации
     'protect',                       # Для защиты
     'allauth',
