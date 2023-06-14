@@ -3,10 +3,11 @@
 from django.views.generic import ListView, DetailView  # List выводит список объектов модели, Detail - подробно об одном
 from .models import Product
 from datetime import datetime  # Для получения текущей даты/времени
+from .filters import ProductFilter
 
 
 class ProductsList(ListView):
-    model = Product    # Указываем модель, объекты которой мы будем выводить
+    model = Product  # Указываем модель, объекты которой мы будем выводить
 
     ordering = '-name'  # Поле, которое будет использоваться для сортировки объектов
     # ordering = '-name'  # Обратная сортировка
@@ -18,6 +19,7 @@ class ProductsList(ListView):
     # Это имя списка, в котором будут лежать все объекты.
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'products'
+    paginate_by = 1  # вот так мы можем указать количество записей на странице
 
     # Вот так мы можем использовать дженерик ListView для вывода списка товаров:
     #
@@ -47,7 +49,18 @@ class ProductsList(ListView):
         # Добавим ещё одну пустую переменную, чтобы на её примере рассмотреть работу ещё одного фильтра.
         # context['next_sale'] = None
         context['next_sale'] = 'Распродажа в среду!'
+
+        context['filterset'] = self.filterset  # Добавляем в контекст объект фильтрации.
         return context
+
+    # Переопределяем функцию получения списка товаров
+    def get_queryset(self):
+        queryset = super().get_queryset()  # Получаем обычный запрос
+        # Используем наш класс фильтрации.
+        # self.request.GET содержит объект QueryDict, который мы рассматривали в этом юните ранее.
+        # Сохраняем нашу фильтрацию в объекте класса, чтобы потом добавить в контекст и использовать в шаблоне.
+        self.filterset = ProductFilter(self.request.GET, queryset)
+        return self.filterset.qs  # Возвращаем из функции отфильтрованный список товаров
 
 
 class ProductDetail(DetailView):
