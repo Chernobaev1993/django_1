@@ -5,10 +5,10 @@ from .views import BaseRegisterView
 from .views import upgrade_me
 
 urlpatterns = [
-    # Указываем имя шаблона для вывода формы и установим им имена
+    # Указываем имя шаблона для вывода формы аутентификации
     path('login/', LoginView.as_view(template_name='sign/login.html'), name='login'),
 
-    # Представления для кнопки logout
+    # Представления для выхода из системы
     path('logout/', LogoutView.as_view(template_name='sign/logout.html'), name='logout'),
 
     # Представление для регистрации

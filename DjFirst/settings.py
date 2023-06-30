@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -31,24 +30,25 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Установленные плагины/приложения
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',           # Отвечает за группу Authentic and Authoriz
+    'django.contrib.auth',  # Отвечает за группу Authentic and Authoriz
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',          # Связывает страницы с сайтом
-    'django.contrib.flatpages',      # Добавляет плоские страницы
-    'fpages',                        # Добавляет новые поля при создании плоской страницы
-    'mc_donalds',                    # Добавляем наше приложение mc_donalds
-    'simpleapp',                     # Обучение представлениям
-    'django_filters',                 # Для фильтрации списка продуктов
-    'sign',                          # Для авторизации
-    'protect',                       # Для защиты
+    'django.contrib.sites',  # Связывает страницы с сайтом
+    'django.contrib.flatpages',  # Добавляет плоские страницы
+    'fpages',  # Добавляет новые поля при создании плоской страницы
+    'mc_donalds',  # Добавляем наше приложение mc_donalds
+    'simpleapp',  # Обучение представлениям
+    'django_filters',  # Для фильтрации списка продуктов
+    'sign',  # Для авторизации
+    'protect',  # Для защиты
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
+    'doctor',  # Для работы с почтой
 ]
 
 # Для приложения allauth
@@ -105,7 +105,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -124,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -135,7 +133,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -153,8 +150,8 @@ STATICFILES_DIRS = [
 ]
 
 # Адрес авторизации
-# LOGIN_URL = 'sign/login'
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = 'sign/login'
+# LOGIN_URL = '/accounts/login/'
 
 # Адрес перенаправления после авторизации
 LOGIN_REDIRECT_URL = '/'
@@ -166,3 +163,19 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
+
+EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
+# ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами,
+# это всё то что идёт до собаки
+EMAIL_HOST_USER = 'chernobaevap'
+EMAIL_HOST_PASSWORD = 'TunecFish1993a?ya'  # пароль от почты
+# Яндекс использует ssl, подробнее о том, что это, почитайте в дополнительных источниках,
+# но включать его здесь обязательно
+EMAIL_USE_SSL = True
+
+ADMINS = [
+    ('Alexandr', 'a.p.chernobaev@tmn3.etagi.com'),
+    # список всех админов в формате ('имя', 'их почта')
+]
+SERVER_EMAIL = 'chernobaevap@yandex.ru'  # это будет у нас вместо аргумента FROM в массовой рассылке

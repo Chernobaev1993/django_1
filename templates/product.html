@@ -1,6 +1,8 @@
 <!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+
 <!-- Название у нас будет Product -->
 {% block title %}
 Product
@@ -9,4 +11,6 @@ Product
 <!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
 {% block content %}
 <h1>{{ product.name }}</h1>
+<p>{{ product.description }}</p>
+<h3>{{ product.price|currency }}</h3>
 {% endblock content %}

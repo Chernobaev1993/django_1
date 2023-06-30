@@ -37,4 +37,5 @@ urlpatterns = [
 
     # Для allauth
     path('accounts/', include('allauth.urls')),
+    path('appoint/', include('doctor.urls')),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.urls import reverse
 
 
 class Product(models.Model):  # Сущность "товар" для нашей витрины
@@ -14,6 +15,11 @@ class Product(models.Model):  # Сущность "товар" для нашей 
 
     def __str__(self):  # Как печатать объект
         return f'{self.name.title()}: {self.description[:40]} ({self.price})'
+
+    # Django не знает, какую страницу нужно открыть после создания товара, поэтому пропишем url нового продукта
+    def get_absolute_url(self):
+        # reverse позволяет указывать имя пути, которые мы прописали в urls.py
+        return reverse('product_detail', args=[str(self.id)])
 
 
 class Category(models.Model):  # Категория, к которой будет привязываться товар

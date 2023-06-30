@@ -1,9 +1,12 @@
 # Импортируем класс, который говорит нам о том,
 # что в этом представлении мы будем выводить список объектов из БД
-from django.views.generic import ListView, DetailView  # List выводит список объектов модели, Detail - подробно об одном
+# List выводит список объектов модели, Detail - подробно об одном, Create - создание
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Product
 from datetime import datetime  # Для получения текущей даты/времени
 from .filters import ProductFilter
+from .forms import ProductForm
 
 
 class ProductsList(ListView):
@@ -70,3 +73,26 @@ class ProductDetail(DetailView):
     # Будет выводить товар как, как мы описали его в методе __str__
     # Мы также можем указать Django как называть идентификатор в urlpatterns (по-умолчанию стоит pk)
     # pk_url_kwarg = 'id'
+
+
+# Добавляем новое представление для создания товаров.
+class ProductCreate(CreateView):
+    form_class = ProductForm  # Указываем нашу разработанную форму
+    model = Product  # модель товаров
+    template_name = 'product_edit.html'  # и новый шаблон, в котором используется форма.
+
+
+# Добавляем представление для изменения товара. Обрати внимание, что мы используем тот же шаблон! И ту же форму
+class ProductUpdate(UpdateView):
+    form_class = ProductForm
+    model = Product
+    template_name = 'product_edit.html'
+
+
+# Представление удаляющее товар.
+class ProductDelete(DeleteView):
+    # Обрати внимание, мы не используем форму для удаления товара
+    model = Product
+    template_name = 'product_delete.html'
+    # Однако добавляем перенаправление после удаления, то же самое, что и reverse
+    success_url = reverse_lazy('product_list')
